@@ -40,13 +40,23 @@ function dumpItems()
 end
 
 function main()
-	refuel()
 	-- move into position
-	while not turtle.detect() do
-		turtle.forward()
+	if turtle.getItemCount(16) == 0 then
+		shell.run("cp disk/startup /")
+		turtle.select(15)
+		turtle.suck(1)
+		turtle.select(16)
+		turtle.suckDown(1)
+		turtle.select(1)
+		turtle.turnLeft()
+		refuel()
+		while not turtle.detect() do
+			turtle.forward()
+		end
+		turtle.turnLeft()
+		print("Waiting for user")
+		io.read()
 	end
-	turtle.turnLeft()
-
 	-- mining loop
 	while true do
 		moveForward()
